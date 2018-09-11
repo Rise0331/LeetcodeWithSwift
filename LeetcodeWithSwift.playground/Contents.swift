@@ -21,25 +21,18 @@
 
 class Solution {
     func removeElement(_ nums: inout [Int], _ val: Int) -> Int {
-        var i = 0
-        var j = nums.count - 1
+        var j = 0
         
-        while i <= j {
-            while i <= j && nums[i] != val {
-                i += 1
+        for i in 0..<nums.count {
+            if nums[i] == val {
+                continue
             }
             
-            while i <= j && nums[j] == val {
-                j -= 1
-            }
-            
-            if ( i <= j) {
-                nums[i] = nums[j]
-                i += 1
-                j -= 1
-            }
+            nums[j] = nums[i]
+            j += 1
         }
         
-        return i
+        return j
     }
 }
+
