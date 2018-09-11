@@ -21,25 +21,38 @@
 
 class Solution {
     func removeElement(_ nums: inout [Int], _ val: Int) -> Int {
-        var i = 0
-        var j = nums.count - 1
+        var j = 0
         
-        while i <= j {
-            while i <= j && nums[i] != val {
-                i += 1
+        for i in 0..<nums.count {
+            if nums[i] == val {
+                continue
             }
             
-            while i <= j && nums[j] == val {
-                j -= 1
-            }
-            
-            if ( i <= j) {
-                nums[i] = nums[j]
-                i += 1
-                j -= 1
+            nums[j] = nums[i]
+            j += 1
+        }
+        
+        return j
+    }
+}
+
+
+//: problem 26 -- Remove Duplicates from Sorted Array
+//: ![](remove-duplicate-element-in-sorted-array.png)
+class Solution26 {
+    func removeDuplicates(_ nums: inout [Int]) -> Int {
+        if nums.count <= 1 {
+            return nums.count
+        }
+        
+        var j = 0
+        for i in 0..<nums.count {
+            if nums[i] != nums[j] {
+                nums[j + 1] = nums[i]
+                j += 1
             }
         }
         
-        return i
+        return j + 1
     }
 }
