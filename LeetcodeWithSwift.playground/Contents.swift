@@ -56,3 +56,32 @@ class Solution26 {
         return j + 1
     }
 }
+
+//: Problem 80 -- Remove Duplicates from Sorted Array II
+//: ![](remove-duplicate-element-from-sorted-array2.png)
+class Solution80 {
+    func removeDuplicates(_ nums: inout [Int]) -> Int {
+        if nums.count < 2 {
+            return nums.count
+        }
+        
+        var length = 0
+        var duplicateCount = 0
+        
+        for i in 1..<nums.count {
+            if nums[i] == nums[length] {
+                duplicateCount += 1
+                if duplicateCount < 2 {
+                    length += 1
+                    nums[length] = nums[i]
+                }
+            } else {
+                length += 1
+                nums[length] = nums[i];
+                duplicateCount = 0
+            }
+        }
+        
+        return length + 1
+    }
+}
