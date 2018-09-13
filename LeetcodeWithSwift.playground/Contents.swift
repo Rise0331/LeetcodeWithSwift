@@ -107,3 +107,40 @@ class Solution66 {
     }
 }
 
+//: ### Problem 118 --- Pascal's-Triangle
+//: ![](Pascal's-Triangle.png)
+class Solution118 {
+    func generate(_ numRows: Int) -> [[Int]] {
+        var result = [[Int]]()
+        
+        if numRows == 0 {
+            return result
+        }
+        
+        if numRows == 1 {
+            return [[1]]
+        }
+        
+        result.append([1])
+        
+        for row in 1..<numRows {
+            var newRow = [1]
+            let prevRow = result[row - 1]
+            
+            if prevRow.count > 1 {
+                for i in 1..<prevRow.count {
+                    newRow.append(prevRow[i - 1] + prevRow[i])
+                }
+            }
+            
+            newRow.append(1)
+            result.append(newRow)
+        }
+        
+        return result
+    }
+}
+
+Solution118().generate(3)
+
+
