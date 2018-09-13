@@ -88,3 +88,28 @@ class Solution {
     }
 }
 ```
+
+
+#### 66. Plus One
+
+类型: Array
+
+```
+class Solution {
+    func plusOne(_ digits: [Int]) -> [Int] {
+        var result = Array(repeating: 0, count: digits.count)
+        var carry = 1
+        
+        for i in (0..<digits.count).reversed() {
+            result[i] = (digits[i] + carry) % 10
+            carry = (digits[i] + carry) / 10
+        }
+        
+        if carry == 1 {
+            result.insert(1, at: 0)
+        }
+        
+        return result
+    }
+}
+```
