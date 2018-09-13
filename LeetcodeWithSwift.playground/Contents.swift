@@ -37,7 +37,7 @@ class Solution {
 }
 
 
-//: problem 26 -- Remove Duplicates from Sorted Array
+//: ### problem 26 -- Remove Duplicates from Sorted Array
 //: ![](remove-duplicate-element-in-sorted-array.png)
 class Solution26 {
     func removeDuplicates(_ nums: inout [Int]) -> Int {
@@ -57,7 +57,7 @@ class Solution26 {
     }
 }
 
-//: Problem 80 -- Remove Duplicates from Sorted Array II
+//: ### Problem 80 -- Remove Duplicates from Sorted Array II
 //: ![](remove-duplicate-element-from-sorted-array2.png)
 class Solution80 {
     func removeDuplicates(_ nums: inout [Int]) -> Int {
@@ -85,3 +85,62 @@ class Solution80 {
         return length + 1
     }
 }
+
+
+//: ### Problem 66 --- Plus One
+//: ![](Plus-One.png)
+class Solution66 {
+    func plusOne(_ digits: [Int]) -> [Int] {
+        var result = Array(repeating: 0, count: digits.count)
+        var carry = 1
+        
+        for i in (0..<digits.count).reversed() {
+            result[i] = (digits[i] + carry) % 10
+            carry = (digits[i] + carry) / 10
+        }
+        
+        if carry == 1 {
+            result.insert(1, at: 0)
+        }
+        
+        return result
+    }
+}
+
+//: ### Problem 118 --- Pascal's-Triangle
+//: ![](Pascal's-Triangle.png)
+class Solution118 {
+    func generate(_ numRows: Int) -> [[Int]] {
+        var result = [[Int]]()
+        
+        if numRows == 0 {
+            return result
+        }
+        
+        if numRows == 1 {
+            return [[1]]
+        }
+        
+        result.append([1])
+        
+        for row in 1..<numRows {
+            var newRow = [1]
+            let prevRow = result[row - 1]
+            
+            if prevRow.count > 1 {
+                for i in 1..<prevRow.count {
+                    newRow.append(prevRow[i - 1] + prevRow[i])
+                }
+            }
+            
+            newRow.append(1)
+            result.append(newRow)
+        }
+        
+        return result
+    }
+}
+
+Solution118().generate(3)
+
+
