@@ -94,7 +94,11 @@ class Solution {
 
 类型: Array
 
-```
+![](http://op6guxky2.bkt.clouddn.com/Plus-One.png)
+
+思路：使用变量carry保存进位，一开始是1，就是本身要加的那个1，然后从后往前逐位相加上进位，求余得到位置i的结果，再计算下一位的进位。遍历结束如果进位是1，还需要在结果数组的最前面添加1，最为最后结果。
+
+```swift
 class Solution {
     func plusOne(_ digits: [Int]) -> [Int] {
         var result = Array(repeating: 0, count: digits.count)
