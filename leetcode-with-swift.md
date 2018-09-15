@@ -118,7 +118,7 @@ class Solution {
 }
 ```
 
-#### 108. Pascal's Triangle
+#### 118. Pascal's Triangle
 
 类型: Array
 
@@ -167,6 +167,42 @@ class Solution {
         }
         
         return result
+    }
+}
+```
+
+#### 119. Pascal's Triangle II
+
+类型: Array
+
+![](http://op6guxky2.bkt.clouddn.com/pascal-triangle-2.png)
+
+```swift
+class Solution {
+    func getRow(_ rowIndex: Int) -> [Int] {        
+        var prevRow = [1]
+        var curRow = [1, 1]
+        
+        if rowIndex == 0 {
+            return prevRow
+        }
+        
+        if rowIndex == 1 {
+            return curRow
+        }
+        
+        for _ in 2...rowIndex {
+            prevRow = curRow
+            var tmpRow = [1]
+            for i in 1..<prevRow.count {
+                tmpRow.append(prevRow[i] + prevRow[i - 1])
+            }
+            tmpRow.append(1)
+            
+            curRow = tmpRow
+        }
+        
+        return curRow
     }
 }
 ```

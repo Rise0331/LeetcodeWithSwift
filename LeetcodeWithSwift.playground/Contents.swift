@@ -141,6 +141,34 @@ class Solution118 {
     }
 }
 
-Solution118().generate(3)
+//: ### Problem 119 --- Pascal's Triangle II
+//: ![](pascal-triangle-2.png)
+class Solution119 {
+    func getRow(_ rowIndex: Int) -> [Int] {
+        var prevRow = [1]
+        var curRow = [1, 1]
+        
+        if rowIndex == 0 {
+            return prevRow
+        }
+        
+        if rowIndex == 1 {
+            return curRow
+        }
+        
+        for _ in 2...rowIndex {
+            prevRow = curRow
+            var tmpRow = [1]
+            for i in 1..<prevRow.count {
+                tmpRow.append(prevRow[i] + prevRow[i - 1])
+            }
+            tmpRow.append(1)
+            
+            curRow = tmpRow
+        }
+        
+        return curRow
+    }
+}
 
 
