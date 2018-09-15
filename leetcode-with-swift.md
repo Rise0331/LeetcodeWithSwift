@@ -251,3 +251,32 @@ class Solution {
     }
 }
 ```
+
+#### 1. Two Sum
+
+类型: Array, Hash Table
+
+![](http://op6guxky2.bkt.clouddn.com/two-sum-problem.png)
+
+思路：构造一个字典，用来保存数组元素和元素对应的下标，每遍历到一个元素就去检查，(traget - element)是否已经在字典中，在的话返回两个元素的下标，这里要求小的下标在前面。还应该注意两个元素值相等的情况，即target = element * 2。
+
+```swift
+class Solution {
+    func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
+        var numsDict = [Int: Int]()
+        
+        for index in 0..<nums.count {
+            let element = nums[index]
+            
+            if let anotherIndex = numsDict[target - element],
+                index != anotherIndex {
+                return [min(index, anotherIndex), max(index, anotherIndex)]
+            }
+            
+            numsDict[element] = index
+        }
+        
+        return [nums.index(of: target / 2)!, numsDict[target / 2]!]
+    }
+}
+```

@@ -208,3 +208,25 @@ class Solution88 {
     }
 }
 
+
+//: ### Problem 1 --- Two Sum
+//: ![](two-sum-problem.png)
+class Solution1 {
+    func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
+        var numsDict = [Int: Int]()
+        
+        for index in 0..<nums.count {
+            let element = nums[index]
+            
+            if let anotherIndex = numsDict[target - element],
+                index != anotherIndex {
+                return [min(index, anotherIndex), max(index, anotherIndex)]
+            }
+            
+            numsDict[element] = index
+        }
+        
+        return [nums.index(of: target / 2)!, numsDict[target / 2]!]
+    }
+}
+
