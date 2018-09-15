@@ -171,4 +171,40 @@ class Solution119 {
     }
 }
 
+//: ### Problem 88 --- Merge Sorted Array
+//: ![](merge-sorted-array.png)
+class Solution88 {
+    func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
+        if (m == 0) {
+            nums1 = nums2
+            return
+        }
+        
+        if (n == 0) {
+            return
+        }
+        
+        var tmpM = m - 1
+        var tmpN = n - 1
+        
+        for i in (0..<(m + n)).reversed() {
+            if nums1[tmpM] > nums2[tmpN] {
+                nums1[i] = nums1[tmpM]
+                tmpM -= 1
+            } else {
+                nums1[i] = nums2[tmpN]
+                tmpN -= 1
+            }
+            
+            if (tmpM < 0 || tmpN < 0) {
+                break
+            }
+        }
+        
+        while (tmpN >= 0) {
+            nums1[tmpN] = nums2[tmpN]
+            tmpN -= 1
+        }
+    }
+}
 

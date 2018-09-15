@@ -206,3 +206,48 @@ class Solution {
     }
 }
 ```
+
+#### 88. Merge Sorted Array
+
+类型: Array
+
+![](http://op6guxky2.bkt.clouddn.com/merge-sorted-array.png)
+
+思路：nums1由m个元素，nums2有n个元素，最终合并到nums1后，nums1将有(m + n)个元素，设 i = (m + n - 1)，表示即将合并到数组的较大值对应的下标，从后往前比较nums1和nums2中的元素，将大的元素放到i对应的位置，递减i，同时递减较大值数组的下表，继续比较。比较结束，如果nums2还有剩余的元素，应将这些元素复制到nums1。
+
+```swift
+class Solution {
+    func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
+        if (m == 0) {
+            nums1 = nums2
+            return
+        }
+        
+        if (n == 0) {
+            return
+        }
+        
+        var tmpM = m - 1
+        var tmpN = n - 1
+        
+        for i in (0..<(m + n)).reversed() {        
+            if nums1[tmpM] > nums2[tmpN] {
+                nums1[i] = nums1[tmpM]
+                tmpM -= 1
+            } else {
+                nums1[i] = nums2[tmpN]
+                tmpN -= 1
+            }
+            
+            if (tmpM < 0 || tmpN < 0) {
+                break
+            }
+        }
+        
+        while (tmpN >= 0) {
+            nums1[tmpN] = nums2[tmpN]
+            tmpN -= 1
+        }
+    }
+}
+```
