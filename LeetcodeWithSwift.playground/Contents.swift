@@ -230,3 +230,35 @@ class Solution1 {
     }
 }
 
+//: ### Problem 74 --- Search a 2D Matrix
+//: ![](search-a-2d-matrix.png)
+class Solution74 {
+    func searchMatrix(_ matrix: [[Int]], _ target: Int) -> Bool {
+        
+        for row in matrix {
+            if let first = row.first, let last = row.last, first <= target && target <= last {
+                return binarySearch(numbers: row, target: target)
+            }
+        }
+        
+        return false
+    }
+    
+    func binarySearch(numbers: [Int], target: Int) -> Bool {
+        var low = 0
+        var high = numbers.count - 1
+        while low <= high {
+            let mid = low + (high - low) / 2
+            if numbers[mid] < target {
+                low = mid + 1
+            } else if numbers[mid] > target {
+                high = mid - 1
+            } else {
+                return true
+            }
+        }
+        
+        return false
+    }
+}
+
