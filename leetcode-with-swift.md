@@ -280,3 +280,44 @@ class Solution {
     }
 }
 ```
+
+
+#### 74. Search a 2D Matrix
+
+类型: Array, Binary Search
+
+![](http://op6guxky2.bkt.clouddn.com/search-a-2d-matrix.png)
+
+思路：矩阵的每一行都是有序的，而且下一行的元素一定比上一行的要大，因此可以先确定目标元素所在的行，接着使用二分查找进行判断目标元素是否存在。
+
+```swift
+class Solution {
+    func searchMatrix(_ matrix: [[Int]], _ target: Int) -> Bool {
+        
+        for row in matrix {
+            if let first = row.first, let last = row.last, first <= target && target <= last {
+                return binarySearch(numbers: row, target: target)
+            }
+        }
+        
+        return false
+    }
+    
+    func binarySearch(numbers: [Int], target: Int) -> Bool {
+        var low = 0
+        var high = numbers.count - 1
+        while low <= high {
+            let mid = low + (high - low) / 2
+            if numbers[mid] < target {
+                low = mid + 1
+            } else if numbers[mid] > target {
+                high = mid - 1
+            } else {
+                return true
+            }
+        }
+        
+        return false
+    }
+}
+```
