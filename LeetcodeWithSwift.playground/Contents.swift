@@ -262,3 +262,45 @@ class Solution74 {
     }
 }
 
+
+//: ### Problem 35 --- Search Insert Position
+//: ![](search-insert-position.png)
+class Solution35 {
+    func searchInsert(_ nums: [Int], _ target: Int) -> Int {
+        if nums.count == 0 {
+            return 0
+        }
+        
+        let targetIndex = binarySearch(numbers: nums, target: target)
+        
+        if targetIndex >= nums.count {
+            return targetIndex
+        }
+        
+        if nums[targetIndex] >= target {
+            return targetIndex
+        } else {
+            return targetIndex + 1
+        }
+    }
+    
+    func binarySearch(numbers: [Int], target: Int) -> Int {
+        var low = 0
+        var high = numbers.count - 1
+        var mid = low + (high - low) / 2
+        
+        while low <= high {
+            if numbers[mid] < target {
+                low = mid + 1
+            } else if numbers[mid] > target {
+                high = mid - 1
+            } else {
+                break
+            }
+            
+            mid = low + (high - low) / 2
+        }
+        
+        return mid
+    }
+}

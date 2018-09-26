@@ -321,3 +321,55 @@ class Solution {
     }
 }
 ```
+
+
+#### 35. Search Insert Position
+
+类型: Array, Binary Search
+
+![](http://op6guxky2.bkt.clouddn.com/search-insert-position.png)
+
+思路：采用二分查找，找到最接近目标值的下标，如果下标等于数组的长度，则目标值是最后一个元素；如果下表对应的值大于等于目标值，该下标就是目标值应该所在的位置；当下标对应的值小于目标值，则目标值对应的位置在下标的后一位置。
+
+
+```swift
+class Solution {
+    func searchInsert(_ nums: [Int], _ target: Int) -> Int {
+        if nums.count == 0 {
+            return 0
+        }
+        
+        let targetIndex = binarySearch(numbers: nums, target: target)
+
+        if targetIndex >= nums.count {
+            return targetIndex
+        }
+        
+        if nums[targetIndex] >= target {
+            return targetIndex
+        } else {
+            return targetIndex + 1
+        }
+    }
+    
+    func binarySearch(numbers: [Int], target: Int) -> Int {
+        var low = 0
+        var high = numbers.count - 1
+        var mid = low + (high - low) / 2
+        
+        while low <= high {
+            if numbers[mid] < target {
+                low = mid + 1
+            } else if numbers[mid] > target {
+                high = mid - 1
+            } else {
+                break
+            }
+            
+            mid = low + (high - low) / 2
+        }
+        
+        return mid
+    }
+}
+```
