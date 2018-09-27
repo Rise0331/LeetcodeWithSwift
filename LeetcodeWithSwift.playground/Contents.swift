@@ -304,3 +304,15 @@ class Solution35 {
         return mid
     }
 }
+
+//: ### Problem 268 --- Missing Number
+//: ![](missing-number.png)
+class Solution268 {
+    func missingNumber(_ nums: [Int]) -> Int {
+        var result = 0
+        for i in 0..<nums.count {
+            result ^= (i ^ nums[i])
+        }
+        return result ^ nums.count
+    }
+}

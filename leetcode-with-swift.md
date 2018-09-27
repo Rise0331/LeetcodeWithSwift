@@ -373,3 +373,24 @@ class Solution {
     }
 }
 ```
+
+
+#### 268. Missing Number
+
+类型: Bit Manipulation
+
+![](http://op6guxky2.bkt.clouddn.com/missing-number.png)
+
+思路：异或(XOR)运算，两个数相等时，结果为零。从0开始取n个连续的数，最小的数为0，最大的数为n-1。假设现在有另一个数组nums2包含0到n-1, 将nums中的元素与nums2进行异或，成对出现的数字异或的结果为0，只出现一次的就是缺失的数字，这里可以用nums数组的下标来模拟nums2的元素，最后再异或上最大的数字，最大的数字就是nums.count，得到的就是最终结果。
+
+```swift
+class Solution {
+    func missingNumber(_ nums: [Int]) -> Int {
+        var result = 0
+        for i in 0..<nums.count {
+            result ^= (i ^ nums[i])
+        }
+        return result ^ nums.count
+    }
+}
+```
