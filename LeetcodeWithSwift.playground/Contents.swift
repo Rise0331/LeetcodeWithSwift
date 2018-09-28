@@ -316,3 +316,86 @@ class Solution268 {
         return result ^ nums.count
     }
 }
+
+
+
+//: ### Problem 2 --- Add Two Numbers
+//: ![](add-two-numbers.png)
+public class ListNode {
+    public var val: Int
+    public var next: ListNode?
+    public init(_ val: Int) {
+        self.val = val
+        self.next = nil
+    }
+}
+
+class Solution2 {
+    func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
+        
+        if l1 == nil {
+            return l2
+        }
+        
+        if l2 == nil {
+            return l1
+        }
+        
+        var tmpL1 = l1
+        var tmpL2 = l2
+        var prevL1 = tmpL1
+        var prevL2 = tmpL2
+        var carry = 0
+        
+        while tmpL1 != nil && tmpL2 != nil {
+            let sum = tmpL1!.val + tmpL2!.val + carry
+            tmpL1?.val = sum % 10
+            tmpL2?.val = sum % 10
+            carry = sum / 10
+            
+            prevL1 = tmpL1
+            prevL2 = tmpL2
+            
+            tmpL1 = tmpL1?.next
+            tmpL2 = tmpL2?.next
+        }
+        
+        if tmpL1 == nil && tmpL2 == nil {
+            if carry == 1 {
+                prevL1?.next = ListNode(1)
+            }
+            return l1
+        }
+        
+        if tmpL1 == nil {
+            while tmpL2 != nil {
+                let sum = tmpL2!.val + carry
+                tmpL2?.val = sum % 10
+                carry = sum / 10
+                
+                prevL2 = tmpL2
+                tmpL2 = tmpL2?.next
+            }
+            
+            if carry == 1 {
+                prevL2?.next = ListNode(1)
+            }
+            return l2
+        }
+        
+        while tmpL1 != nil {
+            let sum = tmpL1!.val + carry
+            tmpL1?.val = sum % 10
+            carry = sum / 10
+            
+            prevL1 = tmpL1
+            tmpL1 = tmpL1?.next
+        }
+        
+        if carry == 1 {
+            prevL1?.next = ListNode(1)
+        }
+        
+        return l1
+    }
+}
