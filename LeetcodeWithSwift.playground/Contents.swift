@@ -399,3 +399,30 @@ class Solution2 {
         return l1
     }
 }
+
+
+
+//: ### Problem 104 --- Maximum Depth of Binary Tree
+//: ![](Maximum-Depth-Of-Binary-Tree.png)
+// Definition for a binary tree node.
+public class TreeNode {
+    public var val: Int
+    public var left: TreeNode?
+    public var right: TreeNode?
+    public init(_ val: Int) {
+        self.val = val
+        self.left = nil
+        self.right = nil
+    }
+}
+
+class Solution104 {
+    func maxDepth(_ root: TreeNode?) -> Int {
+        
+        if root == nil {
+            return 0
+        }
+        
+        return max(maxDepth(root?.left), maxDepth(root?.right)) + 1
+    }
+}

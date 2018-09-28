@@ -485,3 +485,38 @@ class Solution {
     }
 }
 ```
+
+
+#### 2. Maximum Depth of Binary Tree
+
+类型: Tree
+
+![](http://op6guxky2.bkt.clouddn.com/Maximum-Depth-Of-Binary-Tree.png)
+
+思路：通过递归获取左右子树的深度，整棵树的最大深度为，左右子树深度的最大值加1.
+
+```swift
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public var val: Int
+ *     public var left: TreeNode?
+ *     public var right: TreeNode?
+ *     public init(_ val: Int) {
+ *         self.val = val
+ *         self.left = nil
+ *         self.right = nil
+ *     }
+ * }
+ */
+class Solution {
+    func maxDepth(_ root: TreeNode?) -> Int {
+        
+        if root == nil {
+            return 0
+        }
+        
+        return max(maxDepth(root?.left), maxDepth(root?.right)) + 1
+    }
+}
+```
