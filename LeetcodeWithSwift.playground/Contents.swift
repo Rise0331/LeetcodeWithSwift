@@ -262,3 +262,167 @@ class Solution74 {
     }
 }
 
+
+//: ### Problem 35 --- Search Insert Position
+//: ![](search-insert-position.png)
+class Solution35 {
+    func searchInsert(_ nums: [Int], _ target: Int) -> Int {
+        if nums.count == 0 {
+            return 0
+        }
+        
+        let targetIndex = binarySearch(numbers: nums, target: target)
+        
+        if targetIndex >= nums.count {
+            return targetIndex
+        }
+        
+        if nums[targetIndex] >= target {
+            return targetIndex
+        } else {
+            return targetIndex + 1
+        }
+    }
+    
+    func binarySearch(numbers: [Int], target: Int) -> Int {
+        var low = 0
+        var high = numbers.count - 1
+        var mid = low + (high - low) / 2
+        
+        while low <= high {
+            if numbers[mid] < target {
+                low = mid + 1
+            } else if numbers[mid] > target {
+                high = mid - 1
+            } else {
+                break
+            }
+            
+            mid = low + (high - low) / 2
+        }
+        
+        return mid
+    }
+}
+
+//: ### Problem 268 --- Missing Number
+//: ![](missing-number.png)
+class Solution268 {
+    func missingNumber(_ nums: [Int]) -> Int {
+        var result = 0
+        for i in 0..<nums.count {
+            result ^= (i ^ nums[i])
+        }
+        return result ^ nums.count
+    }
+}
+
+
+
+//: ### Problem 2 --- Add Two Numbers
+//: ![](add-two-numbers.png)
+public class ListNode {
+    public var val: Int
+    public var next: ListNode?
+    public init(_ val: Int) {
+        self.val = val
+        self.next = nil
+    }
+}
+
+class Solution2 {
+    func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
+        
+        if l1 == nil {
+            return l2
+        }
+        
+        if l2 == nil {
+            return l1
+        }
+        
+        var tmpL1 = l1
+        var tmpL2 = l2
+        var prevL1 = tmpL1
+        var prevL2 = tmpL2
+        var carry = 0
+        
+        while tmpL1 != nil && tmpL2 != nil {
+            let sum = tmpL1!.val + tmpL2!.val + carry
+            tmpL1?.val = sum % 10
+            tmpL2?.val = sum % 10
+            carry = sum / 10
+            
+            prevL1 = tmpL1
+            prevL2 = tmpL2
+            
+            tmpL1 = tmpL1?.next
+            tmpL2 = tmpL2?.next
+        }
+        
+        if tmpL1 == nil && tmpL2 == nil {
+            if carry == 1 {
+                prevL1?.next = ListNode(1)
+            }
+            return l1
+        }
+        
+        if tmpL1 == nil {
+            while tmpL2 != nil {
+                let sum = tmpL2!.val + carry
+                tmpL2?.val = sum % 10
+                carry = sum / 10
+                
+                prevL2 = tmpL2
+                tmpL2 = tmpL2?.next
+            }
+            
+            if carry == 1 {
+                prevL2?.next = ListNode(1)
+            }
+            return l2
+        }
+        
+        while tmpL1 != nil {
+            let sum = tmpL1!.val + carry
+            tmpL1?.val = sum % 10
+            carry = sum / 10
+            
+            prevL1 = tmpL1
+            tmpL1 = tmpL1?.next
+        }
+        
+        if carry == 1 {
+            prevL1?.next = ListNode(1)
+        }
+        
+        return l1
+    }
+}
+
+
+
+//: ### Problem 104 --- Maximum Depth of Binary Tree
+//: ![](Maximum-Depth-Of-Binary-Tree.png)
+// Definition for a binary tree node.
+public class TreeNode {
+    public var val: Int
+    public var left: TreeNode?
+    public var right: TreeNode?
+    public init(_ val: Int) {
+        self.val = val
+        self.left = nil
+        self.right = nil
+    }
+}
+
+class Solution104 {
+    func maxDepth(_ root: TreeNode?) -> Int {
+        
+        if root == nil {
+            return 0
+        }
+        
+        return max(maxDepth(root?.left), maxDepth(root?.right)) + 1
+    }
+}

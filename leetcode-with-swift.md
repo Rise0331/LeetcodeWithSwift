@@ -321,3 +321,202 @@ class Solution {
     }
 }
 ```
+
+
+#### 35. Search Insert Position
+
+类型: Array, Binary Search
+
+![](http://op6guxky2.bkt.clouddn.com/search-insert-position.png)
+
+思路：采用二分查找，找到最接近目标值的下标，如果下标等于数组的长度，则目标值是最后一个元素；如果下表对应的值大于等于目标值，该下标就是目标值应该所在的位置；当下标对应的值小于目标值，则目标值对应的位置在下标的后一位置。
+
+
+```swift
+class Solution {
+    func searchInsert(_ nums: [Int], _ target: Int) -> Int {
+        if nums.count == 0 {
+            return 0
+        }
+        
+        let targetIndex = binarySearch(numbers: nums, target: target)
+
+        if targetIndex >= nums.count {
+            return targetIndex
+        }
+        
+        if nums[targetIndex] >= target {
+            return targetIndex
+        } else {
+            return targetIndex + 1
+        }
+    }
+    
+    func binarySearch(numbers: [Int], target: Int) -> Int {
+        var low = 0
+        var high = numbers.count - 1
+        var mid = low + (high - low) / 2
+        
+        while low <= high {
+            if numbers[mid] < target {
+                low = mid + 1
+            } else if numbers[mid] > target {
+                high = mid - 1
+            } else {
+                break
+            }
+            
+            mid = low + (high - low) / 2
+        }
+        
+        return mid
+    }
+}
+```
+
+
+#### 268. Missing Number
+
+类型: Bit Manipulation
+
+![](http://op6guxky2.bkt.clouddn.com/missing-number.png)
+
+思路：异或(XOR)运算，两个数相等时，结果为零。从0开始取n个连续的数，最小的数为0，最大的数为n-1。假设现在有另一个数组nums2包含0到n-1, 将nums中的元素与nums2进行异或，成对出现的数字异或的结果为0，只出现一次的就是缺失的数字，这里可以用nums数组的下标来模拟nums2的元素，最后再异或上最大的数字，最大的数字就是nums.count，得到的就是最终结果。
+
+```swift
+class Solution {
+    func missingNumber(_ nums: [Int]) -> Int {
+        var result = 0
+        for i in 0..<nums.count {
+            result ^= (i ^ nums[i])
+        }
+        return result ^ nums.count
+    }
+}
+```
+
+#### 2. Add Two Numbers
+
+类型: List
+
+![](http://op6guxky2.bkt.clouddn.com/add-two-numbers.png)
+
+思路：遍历链表进行累加求和，最后需要根据l1 和 l2是否已经遍历到最后一个节点，分别进行处理。
+
+```swift
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public var val: Int
+ *     public var next: ListNode?
+ *     public init(_ val: Int) {
+ *         self.val = val
+ *         self.next = nil
+ *     }
+ * }
+ */
+class Solution {
+    func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
+        
+        if l1 == nil {
+            return l2
+        }
+        
+        if l2 == nil {
+            return l1
+        }
+        
+        var tmpL1 = l1
+        var tmpL2 = l2
+        var prevL1 = tmpL1
+        var prevL2 = tmpL2
+        var carry = 0
+        
+        while tmpL1 != nil && tmpL2 != nil {
+            let sum = tmpL1!.val + tmpL2!.val + carry
+            tmpL1?.val = sum % 10
+            tmpL2?.val = sum % 10
+            carry = sum / 10
+            
+            prevL1 = tmpL1
+            prevL2 = tmpL2
+            
+            tmpL1 = tmpL1?.next
+            tmpL2 = tmpL2?.next
+        }
+        
+        if tmpL1 == nil && tmpL2 == nil {
+            if carry == 1 {
+                prevL1?.next = ListNode(1)
+            }
+            return l1
+        } 
+        
+        if tmpL1 == nil {
+            while tmpL2 != nil {
+                let sum = tmpL2!.val + carry
+                tmpL2?.val = sum % 10
+                carry = sum / 10
+                
+                prevL2 = tmpL2
+                tmpL2 = tmpL2?.next
+            }
+            
+            if carry == 1 {
+                prevL2?.next = ListNode(1)
+            }
+            return l2
+        }
+        
+        while tmpL1 != nil {
+            let sum = tmpL1!.val + carry
+            tmpL1?.val = sum % 10
+            carry = sum / 10
+            
+            prevL1 = tmpL1
+            tmpL1 = tmpL1?.next
+        }
+        
+        if carry == 1 {
+            prevL1?.next = ListNode(1)
+        }
+        
+        return l1
+    }
+}
+```
+
+
+#### 2. Maximum Depth of Binary Tree
+
+类型: Tree
+
+![](http://op6guxky2.bkt.clouddn.com/Maximum-Depth-Of-Binary-Tree.png)
+
+思路：通过递归获取左右子树的深度，整棵树的最大深度为，左右子树深度的最大值加1.
+
+```swift
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public var val: Int
+ *     public var left: TreeNode?
+ *     public var right: TreeNode?
+ *     public init(_ val: Int) {
+ *         self.val = val
+ *         self.left = nil
+ *         self.right = nil
+ *     }
+ * }
+ */
+class Solution {
+    func maxDepth(_ root: TreeNode?) -> Int {
+        
+        if root == nil {
+            return 0
+        }
+        
+        return max(maxDepth(root?.left), maxDepth(root?.right)) + 1
+    }
+}
+```
